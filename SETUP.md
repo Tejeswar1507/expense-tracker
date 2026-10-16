@@ -16,8 +16,15 @@ The code is in your private repo **github.com/Tejeswar1507/expense-tracker** (br
 ## 2. Database: Neon (3 min)
 1. Go to **neon.tech** → Sign up with Google.
 2. Create project: name `expense-tracker`, region **AWS Asia Pacific (Singapore)**, Postgres 16.
-3. Dashboard → **Connect** → copy the connection string.
-4. 📋 `DATABASE_URL` = that string, exactly as Neon shows it
+3. On your project's **Dashboard** page, click the **Connect** button (top right). A "Connect to your database" window opens.
+   Leave the defaults (branch `production`/`main`, database `neondb`, role `neondb_owner`) and keep **Connection pooling** on.
+   You'll see a line starting with `postgresql://neondb_owner:` — that is the **connection string**. Click the **copy** icon
+   next to it (the password is hidden on screen, but the copy button copies the full string including the password).
+4. 📋 Paste it into your notepad and label it `DATABASE_URL`.
+   `DATABASE_URL` is not something you'll see in Neon — it's just the name this app uses for the connection string.
+   You'll paste the same string in two places later: Streamlit secrets (step 5) and GitHub secrets (step 6).
+   It looks like: `postgresql://neondb_owner:AbC123...@ep-cool-name-123456-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`
+   Keep it private: anyone with it can read your data.
 
 ## 3. Google access for Gmail + Drive (10 min)
 1. **console.cloud.google.com** → top bar → New project → `expense-tracker`.
