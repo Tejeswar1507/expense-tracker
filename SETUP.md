@@ -10,9 +10,8 @@ Do them in order; each says what you'll copy for later. Keep a notepad open for 
 
 ---
 
-## 1. GitHub repo (2 min)
-If you created `Tejeswar1507/expense-tracker` last night, the code is already there. If not:
-create it at github.com/new (Private, no README) and tell me in chat — I'll push the code.
+## 1. GitHub repo ✅ done
+The code is in your private repo **github.com/Tejeswar1507/expense-tracker** (branch `main`).
 
 ## 2. Database: Neon (3 min)
 1. Go to **neon.tech** → Sign up with Google.
