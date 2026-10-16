@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+local.db
+.venv/
+.streamlit/secrets.toml
+client_secret*.json
+# your real financial data never goes into git
+data_private/

@@ -1,0 +1,12 @@
+streamlit>=1.42
+Authlib>=1.3.2
+sqlalchemy>=2.0
+psycopg[binary]>=3.1
+pandas>=2.0
+openpyxl>=3.1
+pdfplumber>=0.11
+requests>=2.31
+google-api-python-client>=2.100
+google-auth>=2.23
+google-auth-oauthlib>=1.1
+altair>=5

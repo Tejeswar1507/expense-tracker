@@ -1,0 +1,42 @@
+name: Hourly job
+
+on:
+  schedule:
+    - cron: "7 * * * *"   # every hour at :07 (UTC); the job works out India time itself
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Send now: daily | weekly | month | sheet (leave empty for a normal run)"
+        required: false
+
+concurrency:
+  group: hourly-job
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Read alert emails and send scheduled emails
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          MEMBER_EMAIL: ${{ secrets.MEMBER_EMAIL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          APP_URL: ${{ secrets.APP_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.force }}" ]; then
+            python -m jobs.hourly --force "${{ github.event.inputs.force }}"
+          else
+            python -m jobs.hourly
+          fi
