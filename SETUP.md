@@ -29,10 +29,42 @@ The code is in your private repo **github.com/Tejeswar1507/expense-tracker** (br
 ## 3. Google access for Gmail + Drive (10 min)
 1. **console.cloud.google.com** → top bar → New project → `expense-tracker`.
 2. APIs & Services → **Library** → enable **Gmail API** and **Google Drive API**.
-3. APIs & Services → **OAuth consent screen** → External → app name `Expense Tracker`, your email as support/developer.
-   Add scopes: `gmail.readonly`, `gmail.send`, `drive.file`. Add yourself as a test user.
-   Then **Publish app → In production**. (Google shows an "unverified app" warning when you sign in — that's
-   expected for a personal app. Staying in "Testing" would make access expire every 7 days.)
+3. **Set up the consent screen** (the "Allow Expense Tracker to…" page you'll see when you sign in).
+   Google now calls this section **Google Auth Platform**. It has many pages (Overview, Branding, Audience,
+   Clients, Data Access, Verification Center…). **You only need three of them; leave everything else as it is.**
+
+   **3a. Create it**
+   - Left menu ☰ → **APIs & Services** → **OAuth consent screen** (it may open as "Google Auth Platform").
+   - If it says *"Google Auth Platform not configured yet"*, click **Get started** and fill the 4 short screens:
+
+     | Screen | What to enter |
+     |---|---|
+     | App Information | App name: `Expense Tracker` · User support email: your Gmail → **Next** |
+     | Audience | Choose **External** → **Next** |
+     | Contact Information | Your Gmail → **Next** |
+     | Finish | Tick *I agree to the Google API Services: User Data Policy* → **Continue** → **Create** |
+
+   - Skip logo, app domain, homepage and privacy links — they're optional for a personal app.
+
+   **3b. Data Access → add the 3 permissions**
+   - Left menu of Google Auth Platform → **Data Access** → **Add or remove scopes**.
+   - A side panel opens with a long list. Don't scroll through it — at the bottom, under
+     **Manually add scopes**, paste this whole line and click **Add to table**:
+     `https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/drive.file`
+   - Click **Update**, then **Save** at the bottom of the Data Access page.
+   - Google labels the Gmail ones "sensitive/restricted". That's normal and fine for personal use; you do **not**
+     need to submit anything in Verification Center.
+
+   **3c. Audience → test user, then publish**
+   - Left menu → **Audience** → under **Test users** → **Add users** → `teja20.sunkara@gmail.com` → **Save**.
+   - On the same Audience page, under **Publishing status** ("Testing"), click **Publish app** → **Confirm**.
+     Status changes to **In production**.
+
+   Why publish? In "Testing", Google cancels the app's Gmail access every 7 days, so the hourly job would stop
+   weekly. "In production" without verification is allowed for personal apps (up to 100 users); the only side
+   effect is a warning when you sign in in step 5: **"Google hasn't verified this app"** → click **Advanced** →
+   **Go to Expense Tracker (unsafe)**. It says "unsafe" only because Google hasn't reviewed it; it's your own app.
+
 4. APIs & Services → **Credentials** → Create credentials → OAuth client ID → **Web application**:
    - Name: `Expense Tracker`
    - Authorized redirect URIs: `https://developers.google.com/oauthplayground` and `http://localhost:8501/oauth2callback`
